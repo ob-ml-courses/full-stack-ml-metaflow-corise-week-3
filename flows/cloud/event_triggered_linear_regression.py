@@ -1,3 +1,4 @@
+
 from metaflow import FlowSpec, step, card, conda_base, current, Parameter, Flow, trigger
 from metaflow.cards import Markdown, Table, Image, Artifact
 
@@ -10,7 +11,7 @@ DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
     libraries={
         "pandas": "1.4.2",
         "pyarrow": "11.0.0",
-        "numpy": "1.21.2",
+        "numpy": "1.22",
         "scikit-learn": "1.1.2",
     }
 )
