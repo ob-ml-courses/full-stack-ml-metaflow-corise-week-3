@@ -19,12 +19,36 @@ class TaxiFarePrediction(FlowSpec):
     data_url = Parameter("data_url", default=URL)
 
     def transform_features(self, df):
+        import numpy as np
         # TODO:
         # Try to complete tasks 2 and 3 with this function doing nothing like it currently is.
         # Understand what is happening.
         # Revisit task 1 and think about what might go in this function.
+        obviously_bad_data_filters = [
+        df.fare_amount > 0,  # fare_amount in US Dollars
+        df.trip_distance <= 100,  # trip_distance in miles
+        df.trip_distance > 0,
+        #Todo
+        df.passenger_count > 0,
+        df.hour > 0,
+        df.total_amount > 0,
+        # TIP: Don't spend too much time on this step for this project though, it practice it is a never-ending process.
+        ]
+
+        # mask = np.full(len(df), 1, dtype=bool)
+        for f in obviously_bad_data_filters:
+            #mask[:] = np.logical_and(mask, f)
+            df = df[f]
+        
+        
+        mask = np.logical_and(
+            np.logical_not(df["trip_distance"].isnull()),
+            np.logical_not(df["total_amount"].isnull()),
+        )
+        df = df[mask]
 
         return df
+
 
     @step
     def start(self):
